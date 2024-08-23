@@ -10,9 +10,15 @@ services:
       - pg:/var/lib/postgresql/data/pgdata
     ports:
       - "${DB_PORT}:5432"
+  migrate:
+    image: migrate/migrate
+    volumes:
+      - ./migrations:/migrations
+    command: ["-path", "/migrations", "-database", "postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}?sslmode=disable", "up"]
+    depends_on:
+      - db
   app:
-    build:
-      no_cache: true
+    build: .
     depends_on:
       - db
 volumes:
