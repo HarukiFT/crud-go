@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - pg:/var/lib/postgresql/data/pgdata
+    ports:
+      - "${DB_PORT}:5432"
+  app:
+    build:
+      no_cache: true
+    depends_on:
+      - db
+volumes:
+  pg:

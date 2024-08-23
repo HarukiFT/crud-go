@@ -1,5 +1,10 @@
 package main
 
-func main() {
+import (
+	"github.com/HarukiFT/go-crud/config"
+)
 
+func main() {
+	config.LoadEnv()
+	// db := config.GetDB()
 }
